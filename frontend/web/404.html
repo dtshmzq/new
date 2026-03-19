@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404</title>
+
+    <meta http-equiv="refresh" content="0; url=/" />
+    <meta name="robots" content="noindex, follow" />
+    
+    <link rel="canonical" href="/" />
+    <script>
+        setTimeout(function() {
+            window.location.replace("/");
+        }, 3000); 
+        
+        setTimeout(function() {
+            window.location.href = "/";
+        }, 5000); 
+        
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                window.location.replace("/");
+            }
+        });
+        
+
+        window.addEventListener('beforeunload', function() {
+
+            sessionStorage.setItem('lastRedirectedFrom', window.location.href);
+        });
+        
+
+        function detectAndLogUserAgent() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isBot = /bot|crawler|spider|scanner|curl|wget|python|java|php|ruby|go|node|fetch|http-client/i.test(userAgent);
+            
+            console.log('用户代理:', navigator.userAgent);
+            console.log('检测为蜘蛛/爬虫:', isBot);
+            console.log('执行301重定向到首页');
+            if (typeof gtag !== 'undefined') {
+                gtag('event', '404_redirect', {
+                    'event_category': 'errors',
+                    'event_label': window.location.pathname,
+                    'value': 1
+                });
+            }
+        }
+        
+        // 页面加载时执行检测
+        window.onload = function() {
+            detectAndLogUserAgent();
+            
+            // 设置倒计时显示
+            let seconds = 3;
+            const countdownElement = document.querySelector('.footer p:last-child');
+            const originalText = countdownElement.textContent;
+            
+            const countdownInterval = setInterval(() => {
+                countdownElement.textContent = `页面将在${seconds}秒内自动重定向到首页`;
+                seconds--;
+                
+                if (seconds < 0) {
+                    clearInterval(countdownInterval);
+                    countdownElement.textContent = "正在重定向到首页...";
+                }
+            }, 1000);
+        };
+        
+        // 监听点击事件，用户点击页面任意位置时立即重定向
+        document.addEventListener('click', function() {
+            window.location.replace("/");
+        });
+        
+        // 监听键盘事件，用户按任意键时立即重定向
+        document.addEventListener('keydown', function() {
+            window.location.replace("/");
+        });
+    </script>
+</body>
+</html>

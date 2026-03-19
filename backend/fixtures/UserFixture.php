@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * Author: feiber
+ * Blog: 
+ * Email: 
+ * Created at: 2017-08-24 21:52
+ */
+namespace backend\fixtures;
+
+use yii\test\ActiveFixture;
+
+class UserFixture extends ActiveFixture
+{
+    public $modelClass = 'common\models\AdminUser';
+}

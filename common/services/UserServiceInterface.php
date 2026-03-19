@@ -1,0 +1,17 @@
+<?php
+/**
+ * Author: feiber
+ * Blog:
+ * Email:
+ * Created at: 2020-01-29 16:54
+ */
+
+namespace common\services;
+
+
+interface UserServiceInterface extends ServiceInterface
+{
+    const ServiceName = "userService";
+
+    public function getUserCountByPeriod($startAt=null, $endAt=null);
+}
